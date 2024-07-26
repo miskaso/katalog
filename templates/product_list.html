@@ -2,8 +2,17 @@
 {% block content %}
 <h1>Категории</h1>
 {% for i in products %}
-    <a href = "{% url 'products' i.id %}">{{i.category}}</a>
+    <a href = "#">{{i.category}}</a><br>
 {%endfor%}
+
+<h1>Продукты:</h1>
+{% for i in products %}
+Название: {{i.name}}
+Категория: {{i.category}}
+Цена: {{i.cena}}
+<br><br>
+{% endfor %}
+
 {%endblock%}
 
 
