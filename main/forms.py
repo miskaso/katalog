@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django import forms
-from .models import Product, User
+from .models import Product
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.contrib.auth.models import User
 from django_recaptcha.fields import ReCaptchaField
@@ -21,3 +21,6 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
+class CustomAuthenticationForm(AuthenticationForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
