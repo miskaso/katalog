@@ -1,12 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product
-from django.views.generic import ListView
 
-# Create your views here.
+def product_list(request):
+    category = request.GET.get('category')
+    products = Product.object.all()
+    if category:
+        products = products.filter(category=category)
+    return render(request, 'product_list.html', {'products': products})
 
 
-def index(req):
-    return render(req, "index.html")
+
 
 
 # class ProductView(ListView):
