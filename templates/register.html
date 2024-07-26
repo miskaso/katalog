@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<title>Регистрация</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+ <h1>Регистрация</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Регистрация</button>
+    </form>
+    <a href="{% url 'login' %}">Уже есть аккаунт? Логин</a>
+{% endblock %}
