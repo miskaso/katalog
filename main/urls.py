@@ -1,8 +1,5 @@
-from django.urls import path
-from .views import *
-
-
+from django.urls import path, include
+from views import product_list
 urlpatterns = [
-    path('', index, name='home'),
+    path('', product_list, name='product_list')
 ]
-

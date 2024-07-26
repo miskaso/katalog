@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Категории</h1>
+{% for i in products%}
+<li> <a href = "{% url 'products.html' i.id %}">{{i.category}}</a> </li>
+
+{%endblock%}
+
+
