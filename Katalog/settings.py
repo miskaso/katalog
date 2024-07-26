@@ -33,14 +33,13 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
-    'django_recaptcha'
+    'django_recaptcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +124,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RECAPTCHA_PUBLIC_KEY = '6Lcf1RUqAAAAANIv08DmT8A8wmyZTA5AzDJhgeT1'
+RECAPTCHA_PRIVATE_KEY = '6Lcf1RUqAAAAAD7t2nvQD1vSqP34WAwyA4cogkfG'
 RECAPTCHA_PUBLIC_KEY = '6Lcf1RUqAAAAANIv08DmT8A8wmyZTA5AzDJhgeT1'
 RECAPTCHA_PRIVATE_KEY = '6Lcf1RUqAAAAAD7t2nvQD1vSqP34WAwyA4cogkfG'
 LOGIN_URL = '/home/'

@@ -3,13 +3,18 @@ from .models import Product
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+
+
+from django.views.generic import DetailView
+
 @login_required
 def product_list(request):
     category = request.GET.get('category')
-    products = Product.object.all()
+    products = Product.objects.all()
     if category:
         products = products.filter(category=category)
     return render(request, 'product_list.html', {'products': products})
+
 
 
 def register_view(request):
@@ -43,3 +48,10 @@ def login_view(request):
 #
 #     def get_context_data(self, *, object_list=None, **kwargs):
 #         context = super().get
+
+
+class DetailProduct(DetailView):
+    template_name = 'detail.html'
+    model = Product
+    context_object_name = 'detail'
+    slug_field = 'slug'
