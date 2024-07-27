@@ -1,18 +1,36 @@
-{% extends 'layout.html' %}
-{% block content %}
-<h1>Категории</h1>
-{% for i in products %}
-    <a href = "#">{{i.category}}</a><br>
-{%endfor%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Список продуктов</h1>
 
-<h1>Продукты:</h1>
-{% for i in products %}
-Название: {{i.name}}
-Категория: {{i.category}}
-Цена: {{i.cena}}
-<br><br>
-{% endfor %}
 
-{%endblock%}
+    <form method="get" action="{% url 'product_list' %}">
+        <label for="category">Фильтр по категории:</label>
+        <select id="category" name="category">
+            <option value="">Все категории</option>
+            {% for category in categories %}
+                <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>{{ category }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Фильтр</button>
+    </form>
+
+
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a> - {{ product.price }} - {{ product.category }}
+            </li>
+        {% empty %}
+            <li>Продуктов не найдено</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'home' %}">Вернуться</a>
+</body>
+</html>
 
 
