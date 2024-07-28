@@ -11,7 +11,7 @@
             {% csrf_token %}
             <button type="submit">Выйти</button>
         </form>
-        <a href="{% url 'product_list' %}">В каталог</a>
+        <br><br><a href="{% url 'product_list' %}">В каталог</a><br>
         <a href="{% url 'add_product' %}">Добавить продукт</a>
     {% else %}
         {% if error %}

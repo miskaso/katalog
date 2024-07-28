@@ -12,7 +12,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'description', 'category', 'cena']
+        fields = '__all__'
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -21,6 +21,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
