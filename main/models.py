@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
+from autoslug import AutoSlugField
+from unidecode import unidecode
 # Create your models here.
 
 
@@ -8,7 +10,7 @@ class Product(models.Model):
     description = models.TextField()
     category = models.CharField(max_length=55)
     cena = models.IntegerField()
-    slug = models.SlugField(unique=True, blank=True)
+    slug = AutoSlugField(populate_from='name', unique=True, always_update=True, slugify=lambda value: unidecode(value).replace(' ', '-'))
 
     def __str__(self):
         return self.name

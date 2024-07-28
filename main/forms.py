@@ -7,12 +7,13 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 
+
 class ProductForm(forms.ModelForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     class Meta:
         model = Product
-        fields = ['name', 'description', 'category', 'cena']
+        fields = ['name','description','category','cena']
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -21,6 +22,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
