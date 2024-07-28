@@ -1,6 +1,9 @@
-{% extends 'layout.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
 <title>Регистрация</title>
+</head>
+<body>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
  <h1>Регистрация</h1>
     <form method="post">
@@ -9,4 +12,5 @@
         <button type="submit">Регистрация</button>
     </form>
     <a href="{% url 'login' %}">Уже есть аккаунт? Логин</a>
-{% endblock %}
+</body>
+</html>

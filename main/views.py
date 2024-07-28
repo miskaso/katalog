@@ -1,20 +1,26 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
-
-
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, ProductForm
 from django.views.generic import DetailView
 
 
+from django.shortcuts import render
+from .models import Product
+
 @login_required
 def product_list(request):
-    category = request.GET.get('category')
+    selected_category = request.GET.get('category')
     products = Product.objects.all()
-    if category:
-        products = products.filter(category=category)
-    return render(request, 'product_list.html', {'products': products})
+    if selected_category:
+        products = products.filter(category=selected_category)
+    categories = Product.objects.values_list('category', flat=True).distinct()
+    return render(request, 'product_list.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': selected_category
+    })
 
 
 
@@ -23,23 +29,23 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('login')
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
 
-def login_view(request):
+def user_login(request):
     if request.method == 'POST':
-        form = CustomAuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-    else:
-        form = CustomAuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'home.html', {'Ошибка': 'Неверный логин или пароль'})
+    return render(request, 'home.html')
 
 
 # class ProductView(ListView):
@@ -52,8 +58,31 @@ def login_view(request):
 #         context = super().get
 
 
-class DetailProduct(DetailView):
-    template_name = 'detail.html'
-    model = Product
-    context_object_name = 'detail'
-    slug_field = 'slug'
+# class DetailProduct(DetailView):
+#     template_name = 'detail.html'
+#     model = Product
+#     context_object_name = 'detail'
+#     slug_field = 'slug'
+
+@login_required
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    return render(request, 'product_detail.html', {'product': product})
+
+
+def home(request):
+    return render(request, 'home.html')
+def user_logout(request):
+    logout(request)
+    return redirect('home')
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = Product()
+    return render(request, 'add_product.html', {'form': form})
